@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import Link from 'next/link';
 import './globals.css';
 
 export const metadata = {
@@ -13,7 +14,19 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <nav className="navbar">
+          <div className="navbar-container">
+            <Link href="/items" className="nav-link">
+              Item List
+            </Link>
+            <Link href="/cart" className="nav-link">
+              Cart
+            </Link>
+          </div>
+        </nav>
+        <main>{children}</main>
+      </body>
     </html>
   );
 }
