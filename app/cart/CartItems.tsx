@@ -1,53 +1,40 @@
-"use client";
+'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeFromCart } from '../redux/cartSlice';
+import { RootState } from '../redux/store';
+import { CartItem } from '../type';
 
-interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-}
 
-export default function CartItems() {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    { id: 1, name: "Item 1", price: 10 },
-    { id: 2, name: "Item 2", price: 20 },
-    { id: 3, name: "Item 3", price: 30 },
-  ]);
-
-  const totalPrice = cartItems.reduce((sum, item) => sum + item.price, 0);
-
-  const removeFromCart = (id: number) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
-  };
+const CartItems: React.FC = () => {
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const totalPrice = useSelector((state: RootState) => state.cart.totalPrice);
+  const dispatch = useDispatch();
 
   return (
     <div>
-      {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        <div>
-          <ul className="cart-list">
-            {cartItems.map(item => (
-              <li key={item.id} className="cart-item">
-                <div className="cart-item-details">
-                  <h2>{item.name}</h2>
-                  <p>Price: ${item.price}</p>
-                </div>
-                <button
-                  className="remove-from-cart-button"
-                  onClick={() => removeFromCart(item.id)}
-                >
-                  Remove
-                </button>
-              </li>
-            ))}
-          </ul>
-          <div className="cart-summary">
-            <h2>Total: ${totalPrice}</h2>
-          </div>
-        </div>
-      )}
+      <ul className="cart-list">
+        {cartItems.map((item: CartItem) => (
+          <li key={item.id} className="cart-item">
+            <div className="cart-item-details">
+              <h2>{item.name}</h2>
+              <p>Price: ${item.price}</p>
+            </div>
+            <button
+              className="remove-from-cart-button"
+              onClick={() => dispatch(removeFromCart(item.id))}
+            >
+              Remove
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div className="cart-summary">
+        <h2>Total: ${totalPrice}</h2>
+      </div>
     </div>
   );
-}
+};
+
+export default CartItems;

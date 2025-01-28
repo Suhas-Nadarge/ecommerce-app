@@ -1,10 +1,14 @@
 import React from 'react';
-import ItemList from './items/page';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import ItemList from './items/ItemList';
 
 export default function Home() {
   return (
-    <div>
-      <ItemList />
-    </div>
+    <Provider store={store}>
+      <div>
+        <ItemList />
+      </div>
+    </Provider>
   );
 }
