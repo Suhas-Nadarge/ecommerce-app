@@ -109,3 +109,13 @@ h1 {
   font-size: 1.25rem;
   font-weight: bold;
 }
+
+.item-card.added {
+  background-color: #f0f0f0; /* Grayed out background */
+  opacity: 0.6;
+}
+
+.add-to-cart-button[disabled] {
+  background-color: #ccc; /* Disabled button style */
+  cursor: not-allowed;
+}
