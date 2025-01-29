@@ -119,3 +119,19 @@ h1 {
   background-color: #ccc; /* Disabled button style */
   cursor: not-allowed;
 }
+
+.cart-count {
+  right: 44%;
+  position: absolute;
+  top: 10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 42%;
+  width: 12px;
+  height: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

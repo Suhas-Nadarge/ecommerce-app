@@ -1,16 +1,16 @@
-'use client';
 
+'use client'
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { removeFromCart } from '../redux/cartSlice';
-import { RootState } from '../redux/store';
+import { removeFromCart } from '../store/cartSlice';
+import { RootState } from '../store/store';
 import { CartItem } from '../type';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 
 
 const CartItems: React.FC = () => {
-  const cartItems = useSelector((state: RootState) => state.cart.items);
-  const totalPrice = useSelector((state: RootState) => state.cart.totalPrice);
-  const dispatch = useDispatch();
+  const cartItems = useAppSelector((state: RootState) => state.cart.items);
+  const totalPrice = useAppSelector((state: RootState) => state.cart.totalPrice);
+  const dispatch = useAppDispatch();
 
   return (
     <div>

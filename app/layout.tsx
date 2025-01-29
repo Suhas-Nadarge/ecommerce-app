@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import './globals.css';
+import StoreProvider from './StoreProvider';
+import Navbar from '../components/Navbar';
 
 export const metadata = {
   title: 'Simple Next.js SSR App',
@@ -14,19 +16,14 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body>
-        <nav className="navbar">
-          <div className="navbar-container">
-            <Link href="/items" className="nav-link">
-              Item List
-            </Link>
-            <Link href="/cart" className="nav-link">
-              Cart
-            </Link>
-          </div>
-        </nav>
-        <main>{children}</main>
-      </body>
+
+            <body>
+            <StoreProvider>
+             <Navbar/>
+              
+              <main>{children}</main>
+              </StoreProvider>
+            </body>
     </html>
   );
 }
