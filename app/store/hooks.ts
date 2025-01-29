@@ -3,4 +3,4 @@ import type { RootState, AppDispatch, AppStore } from "./store";
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-export const useAppStore = () => useStore() as AppStore; // ✅ Correct way to type it
+export const useAppStore = () => useStore() as AppStore; 

@@ -6,7 +6,7 @@ import ItemList from './ItemList';
 const Page: React.FC = () => {
   return (
     <div>
-      <h1>Shopping Cart</h1>
+      <h1>Product List</h1>
       <ItemList />
     </div>
   );

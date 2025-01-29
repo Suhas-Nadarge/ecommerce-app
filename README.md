@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+The solution featuring item listings, a shopping cart, and persistent cart storage using localStorage. Users can add items to the cart, view the cart, and see their total.
 
-## Getting Started
+Technologies Used
+Frontend: Next.js v15
+State Management: Redux (using useAppSelector, useAppDispatch hooks)
+Local Storage: Used for persisting the cart data
 
-First, run the development server:
+Features
+Add items to the cart: Users can add items from the product list to the shopping cart.
+Persistent cart: Cart items persist after a page refresh using localStorage.
+Cart Management: Users can view the cart and check the items added.
 
-```bash
+
+Project Setup
+
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This will start the development server and open the app in your default browser at http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+How It Works
+Item List: A list of items is displayed where each item has an image, name, price, and an "Add to Cart" button.
+Cart Management: When an item is added to the cart, the addToCart action is dispatched to the Redux store. The cart is stored in localStorage to persist across page refreshes.
+Redux Store: The app uses Redux to manage the cart state. It dispatches actions to add items and updates the localStorage when the cart changes.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+Notes
+Here When we are creating store instance at first time, we will check if item exists in cart from localstorage - if yes, then add it or leave it.
 
-To learn more about Next.js, take a look at the following resources:
+The addToCart action updates both the Redux store and the localStorage with the new cart state.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Things I tried before going to final solution,
+1. Redux-Persist
+I tried using redux-persist to persist cart data, but faced hydration issues with server-side rendering (SSR). The initial state wasn’t always synced between the server and client, causing inconsistencies. I ended up not using redux-persist and instead manually handled cart persistence with localStorage in useEffect.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Next-Redux-Wrapper
+I explored next-redux-wrapper for integrating Redux with Next.js, but faced compatibility issues with the new app routing (Next.js 13+). The library was built for page routing and didn’t work well with the app directory. I switched to a manual Redux setup for better compatibility.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

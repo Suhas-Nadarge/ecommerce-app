@@ -23,14 +23,16 @@ const cartSlice = createSlice({
     addToCart(state, action: PayloadAction<CartItem>) {
       state.items.push(action.payload);
       state.totalPrice += action.payload.price;
+      localStorage.setItem('cart', JSON.stringify(state.items));
     },
     removeFromCart(state, action: PayloadAction<number>) {
       const index = state.items.findIndex(item => item.id === action.payload);
       if (index !== -1) {
         state.totalPrice -= state.items[index].price;
         state.items.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(state.items));
       }
-    },
+    }
   },
 });
 

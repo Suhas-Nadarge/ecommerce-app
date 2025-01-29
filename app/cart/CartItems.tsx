@@ -1,11 +1,8 @@
-
 'use client'
 import React from 'react';
 import { removeFromCart } from '../store/cartSlice';
 import { RootState } from '../store/store';
-import { CartItem } from '../type';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-
 
 const CartItems: React.FC = () => {
   const cartItems = useAppSelector((state: RootState) => state.cart.items);
@@ -15,8 +12,9 @@ const CartItems: React.FC = () => {
   return (
     <div>
       <ul className="cart-list">
-        {cartItems.map((item: CartItem) => (
+        {cartItems.map((item: any) => (
           <li key={item.id} className="cart-item">
+            <img src={item.image} alt={item.name} className="cart-image" />
             <div className="cart-item-details">
               <h2>{item.name}</h2>
               <p>Price: ${item.price}</p>
@@ -29,6 +27,9 @@ const CartItems: React.FC = () => {
             </button>
           </li>
         ))}
+        <div className="no-item">
+          {!cartItems.length && <p>No Items added to the cart!</p>}
+        </div>
       </ul>
       <div className="cart-summary">
         <h2>Total: ${totalPrice}</h2>

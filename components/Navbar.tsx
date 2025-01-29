@@ -1,21 +1,21 @@
-"use client"; // Required for Redux hooks
+"use client"; 
 
 import React from "react";
 import Link from "next/link";
 import { useAppSelector } from "../app/store/hooks";
 import { ShoppingCart } from "lucide-react"; // Using Lucide for the cart icon
 
- // Using Lucide for the cart icon
+
 
 const Navbar = () => {
   const cartItems = useAppSelector((state) => state.cart.items);
-  const cartItemCount = cartItems.length; // Get the number of items in the cart
+  const cartItemCount = cartItems.length; 
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <Link href="/items" className="nav-link">
-          Item List
+          <h3>Item List</h3>
         </Link>
         <Link href="/cart" className="nav-link cart-link">
           <ShoppingCart size={24} />

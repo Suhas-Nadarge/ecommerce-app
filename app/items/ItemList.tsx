@@ -1,29 +1,39 @@
-
 'use client'
-import React from 'react';
-import { addToCart } from '../store/cartSlice';
+import React, { useEffect, useState } from 'react';
+import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { RootState } from '../store/store';
+import { addToCart } from '../store/cartSlice';
 import { CartItem } from '../type';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-
+import { fetchItems } from '../../mock/mockItems';
 
 const ItemList: React.FC = () => {
-  const items = [
-    { id: 1, name: 'Item 1', price: 10, image: "/items/item1.jpg" },
-    { id: 2, name: 'Item 2', price: 20,image: "/items/item2.jpg" },
-    { id: 3, name: 'Item 3', price: 40,image: "/items/item3.jpg" },
-    { id: 4, name: 'Item 4', price: 30,image: "/items/item4.jpg" },
-    { id: 5, name: 'Item 5', price: 50,image: "/items/item5.jpg" },
-    { id: 6, name: 'Item 6', price: 60,image: "/items/item6.jpg" },
-    // Add more items as needed
-  ];
-
+  const [items, setItems] = useState<CartItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const cartItems = useAppSelector((state: RootState) => state.cart.items);
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    const loadItems = async () => {
+      try {
+        const fetchedItems = await fetchItems();
+        setItems(fetchedItems); // Update state with fetched items
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      } finally {
+        setLoading(false); // Set loading to false when done
+      }
+    };
+
+    loadItems(); // Call the async function to fetch items
+  }, []);
+
   const isItemInCart = (itemId: number) => {
-    return cartItems.some((item: CartItem) => item.id === itemId);
+    return cartItems.some((item) => item.id === itemId);
   };
+
+  if (loading) {
+    return <p className='loading-message'>Loading items...</p>; // Show loading state while fetching
+  }
 
   return (
     <ul className="item-list">
@@ -34,8 +44,9 @@ const ItemList: React.FC = () => {
             key={item.id}
             className={`item-card ${isItemAdded ? 'added' : ''}`}
           >
+            <img src={item.image} alt={item.name} className="item-image" />
             <h2>{item.name}</h2>
-            <p>Price: {item.price}</p>
+            <p>Price: {item.price}$</p>
             <button
               className="add-to-cart-button"
               onClick={() => dispatch(addToCart(item))}
